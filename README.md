@@ -4,6 +4,8 @@ These ML-NAMD simulations were used to investigate the subsituent effects on the
 toward a class of energy-dense molecule, cubane.(ChemRxiv *preprint*, doi:10.33774/chemrxiv-2021-lxsjk)
 
 # What does this demo contain?
+## PyRAI2MD demo version
+[under constructinon]
 ## Training data
 [under constructinon]
 ## Trained model
