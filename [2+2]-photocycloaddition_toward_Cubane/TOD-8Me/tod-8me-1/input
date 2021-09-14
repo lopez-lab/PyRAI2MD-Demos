@@ -1,0 +1,88 @@
+&CONTROL
+title tod-8me-1
+ml_ncpu  1
+qc_ncpu  1
+gl_seed  1
+jobtype  md     [MD, Train, Prediction, Adaptive, Search]
+qm       nn           [Molcas,NN,KRR,GP]
+abinit   molcas
+mingradient 0.25
+maxgradient 0.25
+maxenergy   0.043
+minenergy   0.043
+maxnac      0.25
+minnac      0.25
+maxiter     200
+load 1
+transfer 0
+
+&MD
+reset 1
+scale 1
+resetstep 0
+initcond 0
+nesmb 125
+method wigner
+format molden
+temp 300
+step 4000
+size 20
+ci 2
+root 2
+sfhp gsh
+gap 1.5
+substep 50
+deco 0.1
+adjust 1
+reflect 1
+maxh 100
+thermo 0
+silent  1
+verbose 0
+direct 4000
+
+&NN
+modeldir    NN-tod-8me
+train_data  data9303-13.json
+silent      1
+ratio 0.9 0.1
+train_mode  training
+nn_eg_type  2
+nn_nac_type 0
+permute_map allpath2
+
+&EG
+invd_index     invd_index3.txt
+depth          5
+nn_size        400
+activ          leaky_softplus
+active_alpha   0.03
+loss_weights   5 1
+batch_size     64
+use_reg_activ  l2
+use_reg_weight l2
+reg_l1         1e-8
+reg_l2         1e-8
+val_split      0.1
+epo            1000
+epostep        10
+learning_rate_step   1e-3 1e-4 1e-5
+epoch_step_reduction 600 300 100
+
+&EG2
+invd_index     invd_index3.txt
+depth          4
+nn_size        500
+activ          leaky_softplus
+active_alpha   0.03
+loss_weights   5 1
+batch_size     64
+use_reg_activ  l2
+use_reg_weight l2
+reg_l1         1e-8
+reg_l2         1e-8
+val_split      0.1
+epo            1000
+epostep        10
+learning_rate_step   1e-3 1e-4 1e-5
+epoch_step_reduction 600 300 100
