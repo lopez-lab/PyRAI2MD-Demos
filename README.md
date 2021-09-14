@@ -31,7 +31,7 @@ This demo has three trained NN models:
 
 Each folder contains (e.g., in TOD-8Me):
 
-- **NN-tod-8me/** This folder contains the trained NN weights and hyperparameters in the /energy_gradient/ subfolder.
+- **NN-tod-8me/energy_gradient/** This folder contains the NN hyperparameters, training logs and trained weights.
 
 - **training_data/** This folder contains the compressed training data, saved separatly in a maximum 10 MB file.
 
@@ -53,9 +53,9 @@ Download the repository
     
 Copy one of the model folder or go to that folder (e.g., TOD-8Me)
 
-    cd /[2+2]-photocycloaddition_toward_Cubane/TOD-8Me
+    cd ./PyRAI2MD-Demos/[2+2]-photocycloaddition_toward_Cubane/TOD-8Me
 
-To extract the training data first combine the individule files then untar it
+To extract the training data, first combine the individule files then untar it
 
     cd training_data
     cat data9303-13.json.tar.xz.part** > data9303-13.json.tar.xz
@@ -96,10 +96,137 @@ To load the training data in Python
     movecset          Addition list to store MO vector information, not used in this cases, thus are empty.
     """
 
+To extract the initial condition, simply untar it
+
+     tar -xvf tod-8me.init.tar.xz
+     
+     """
+     The initial conditions are save in a special XYZ format, look like this:
+     Init   1  40   X(A)     Y(A)     Z(A)     VX(au)     VY(au)     VZ(au)     g/mol    e
+     C            0.0000   0.0000    0.000     0.0000     0.0000     0.0000    12.011    6
+     ...
+     ...
+     Init   2  40   X(A)     Y(A)     Z(A)     VX(au)     VY(au)     VZ(au)     g/mol    e
+     ...
+     ...
+     
+     Each structure start with a title line begining with "Init" and followed by 
+     the trajectory index and the number of atom.
+     
+     The following "X(A) ... VZ(au)" are just notes for those columns.
+     
+     The next line specify the atom type, nuclear coordinates in X, Y, and Z, 
+     velocities in X, Y, Z, molar mass, and nuclear charges 
+     
+     The nuclear coordinates are in Angstrom. 
+     The velocities are in atomic unit, Bohr/atomic unit of time
+     """
+     
+## Getting familiar with the PyRAI2MD
+To get started with PyRAI2MD, go to the example calculation folder
+
+    cd ./tod-8me-1
+    
+PyRAI2MD requires an input file, a nuclear coordiantes file and a velocities file to start ML-NAMD simulation.    
+
+The input file has been pre-configured. Here, we list some of the important keywords.
+
+Under &CONTROL section
+
+    title             This is the title of calculation. 
+                      It assumes the NN model folder, nuclear coordiantes, and velocities have the same basename, e.g., 
+                          the NN model folder should be NN-$title,
+                          the nuclear coordiantes file should be $title.xyz, and 
+                          the velocities file should be $title.velo.
+
+    maxenergy         The energy threshold to terminated a trajectories if the prediction std exceeds the treshold.
+    
+    maxgradient       The gradient threshold to terminated a trajectories if the prediction std exceeds the treshold.
+
+Under &MD section
+
+    initcond          The option to sample initial condition.
+                      0 means reading from external coordinates file.
+                      As such, the related keywords, nesmb, method, format are disabled.
+
+    step              The number of trajectory steps.
+    
+    size              The stepsize of trajectory.
+    
+    ci                The configurational interaction space dimension.
+                      This is equivalent to the number of states.
+                      
+    root              The starting root counting from 1 for the ground-state.
+
+    sfhp              The surface hopping method.
+                      The option gsh uses the Zhu-Nakamura approximation.
+    
+    gap               The energy gap to detect surface hopping using Zhu-Nakamura Approximation. Only work with the gsh option.
+    
+    
+    thermo            The thermodynamic ensemble option.
+                      0 means microconanical ensemble, NVE.
+
+    silent            The screen printing option.
+                      1 turns off the screen printing process to speed up ML-NAMD simulation, 
+                      otherwise it prints logfile on screen every MD step.
+                      
+    verbose           The output printing option.
+                      0 only writes energies, population and surface hopping information,
+                      which speed up ML-NAMD simulation and reduce the size of logfile.
+                      1 writes nuclear coordinates, velocities, and nonadiabatic couplings
+                      to disk every MD step.
+     
+Under &NN section
+
+    modeldir          The path to the NN model folder (current folder or absolute path).
+
+    train_data        The path to the training data (current folder or absolute path).
+    
+    silent            The NN writing option.
+                      1 turns off the NN writing process to speed up ML-NAMD simulation,
+                      otherwise, it writes the prediction to disk every MD step.
+
+    nn_eg_type        The type of energy_gradient model.
+                      2 loads two different NNs to predict energy and gradient together
+                      
+    nn_nac_type       The type of nonadibatic_coupling model
+                      0 skips the nonadibatic_coupling NN.
+                      
+    permute_map       The path to the permutation map file (current folder or absolute path).
+    
+Under &EG section (the same for &EG2 section)
+
+    invd_index         The path to the inverse distance file (current folder or absolute path).
+                       Skip this keyword will use the full inverse distance matrix.
+
+    depth              Number of hidden layers.
+   
+    nn_size            Number of neurons per hidden layer.
+    
+    loss_weights       The weight between energy loss and gradient loss.
+    
+    val_split          The ratio of validation set.
+    
+    
+The nuclear coordinates file use the simple XYZ format as:
+
+    40
+    comment line
+    C       0.000  0.000  0.000
+    C       0.001  0.000  1.450
+    ...
+
+The velocities file only contains the XYZ component as:
+
+    0.000 0.000 0.000
+    0.001 0.000 1.450
+    ....
+    
+    
+## Running the first PyRAI2MD calculation
 
 
-## Getting familiar with the PyRAI2MD input file
-[under constructinon]
 ## Understanding the inverse distance file and permutation map
 [under constructinon]
 # What to expect from the simulation?
