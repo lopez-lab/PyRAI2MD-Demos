@@ -263,6 +263,24 @@ Each line specifies one permutation of the orginal atom indices. The meanning is
 
 # What to expect from the simulation?
 ## Anatomy of logfiles
-[under constructinon]
+Be prepared that the ML-NAMD simulation will finish very soon and generate a huge amount of data!
+It is always laborious to search many useful MD informtion from a long and redundant trajectory logfile. PyRAI2MD outputs the trajectory data into several files to enable convenient trajectory analysis.
+
+The output files contain:
+
+- **tod-8me-1.log**  A general output that includes all input settings and MD data, such as kinetic energy, potential energy, surface hopping events and state populations.
+
+- **tod-8me-1.md.energies**  A text file only stores the kinetic energy and potential energy. 
+
+- **tod-8me-1.md.xyz**       A text file only stores the nuclear coordiantes. The comment line record the MD step and electronic state.
+
+- **tod-8me-1.md.velo**      A text file only store the velocities. The comment line record the MD step and electronic state.
+
+- **tod-8me-1.sh.energies**  A text file only stores the kinetic energy and potential energy at surface hopping points. 
+
+- **tod-8me-1.sh.xyz**       A text file only stores the nuclear coordiantes at surface hopping points.
+
+- **tod-8me-1.sh.velo**      A text file only store the velocities at surface hopping points.
+
 ## Additional notes
-[under constructinon]
+TBD
