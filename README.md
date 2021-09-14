@@ -13,11 +13,11 @@ toward a class of energy-dense molecule, cubane.(ChemRxiv *preprint*, doi:10.337
 ## ML-NAMD example
 [under constructinon]
 # How to use this demo?
-## extracting trainding data and intial conditions
+## Extracting trainding data and intial conditions
 [under constructinon]
-## getting familiar with the PyRAI2MD input file
+## Getting familiar with the PyRAI2MD input file
 [under constructinon]
-## understanding the inverse distance file and permutation map
+## Understanding the inverse distance file and permutation map
 [under constructinon]
 # What to expect from the simulation?
 ## Anatomy of logfiles
