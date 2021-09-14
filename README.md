@@ -225,10 +225,42 @@ The velocities file only contains the XYZ component as:
     
     
 ## Running the first PyRAI2MD calculation
+PRAI2MD calculation is easy to start. In only requires one enviromental viriable "PYRAIMD" pointing to the location of PyRAI2MD-demo-version.
 
+    export PYRAIMD = /location/to/PyRAI2MD-demo-version
+    python $PYRAIMD/PYRAIMD.py input
+
+One can use the run_PyRAIMD.sh to submit the job to SLURM, or simply use the inside command to run it locally.
 
 ## Understanding the inverse distance file and permutation map
-[under constructinon]
+The inverse distance and permutation map are important to train the NNs, but not affect the ML-NAMD simulations. Here we just briefly introduce how they are working with PyRAI2MD. The theoretial background of permutation and inverse distance will not be explained here, but available in our publications.
+
+The inverse distance file, **invr_dist3.txt**, is a text file looks like this:
+
+    1 2
+    1 3
+    1 4
+    ...
+    ...
+
+Each line contains the indices of two atom defining a distance to computer their inverse and gradients of inverse.
+By removing some distances, such as a long distance outside a given radius with respect to an atom, it reduces the NN input size. As most of the long distance results in a nearly zero inverse, removing them help remove the noise in the input features.
+
+The permutation map file, **allpath2**, is a text file looks like this:
+
+    5 3 2 8 1 7 6 4 ....
+
+Each line specifies one permutation of the orginal atom indices. The meanning is
+
+    1 permute with 5
+    2 permute with 3
+    3 permute with 2
+    4 permute with 8
+    5 permute with 1
+    6 permute with 7
+    7 permute with 6
+    8 permute with 4
+
 # What to expect from the simulation?
 ## Anatomy of logfiles
 [under constructinon]
