@@ -1,6 +1,6 @@
 # Python Rapid Artificial Intelligence Ab Initio Molecular Dynamics Demo
 This is a demostration of running machine-learning nonadiabatic molecular dyanmics (ML-NAMD) simulation using PyRAI2MD.
-These ML-NAMD simulations were used to investigate the subsituent effects on the [2+2]-photocycloaddition of [3]-ladderenes
+These ML-NAMD simulations were used to investigate the substituent effects on the [2+2]-photocycloaddition of [3]-ladderenes
 toward a class of energy-dense molecule, cubane.(ChemRxiv *preprint*, doi:10.33774/chemrxiv-2021-lxsjk)
 
 # What does this demo contain?
