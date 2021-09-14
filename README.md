@@ -21,11 +21,11 @@ The ML kernel of PyRAI2MD developed by Patrick Reiser and Pascal Friederich @KIT
 ## Trained NN models
 This demo has three trained NN models:
 
-- **/[2+2]-photocycloaddition_toward_Cubane/TOD-8Me** Octamethyl [3]-ladderene model.
+- **/Photocycloaddition_toward_Cubane/TOD-8Me** Octamethyl [3]-ladderene model.
 
-- **/[2+2]-photocycloaddition_toward_Cubane/TOD-8CF3** Octatrifluoromethyl [3]-ladderene model.
+- **/Photocycloaddition_toward_Cubane/TOD-8CF3** Octatrifluoromethyl [3]-ladderene model.
 
-- **/[2+2]-photocycloaddition_toward_Cubane/TOD-8pr** Octacyclopropyl [3]-ladderene model.
+- **/Photocycloaddition_toward_Cubane/TOD-8pr** Octacyclopropyl [3]-ladderene model.
 
 - **json2txt.py** This is a script to conver the training data from JSON to human-readable TXT file. 
 
@@ -53,7 +53,7 @@ Download the repository
     
 Copy one of the model folder or go to that folder (e.g., TOD-8Me)
 
-    cd ./PyRAI2MD-Demos/[2+2]-photocycloaddition_toward_Cubane/TOD-8Me
+    cd ./PyRAI2MD-Demos/Photocycloaddition_toward_Cubane/TOD-8Me
 
 To extract the training data, first combine the individule files then untar it
 
