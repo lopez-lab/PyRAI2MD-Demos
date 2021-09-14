@@ -27,13 +27,15 @@ This demo has three trained NN models:
 
 - **/[2+2]-photocycloaddition_toward_Cubane/TOD-8pr** Octacyclopropyl [3]-ladderene model.
 
+- **json2txt.py** This is a script to conver the training data from JSON to human-readable TXT file. 
+
 Each folder contains (e.g., in TOD-8Me):
 
-- **NN-tod-8me** This is the trained NN. The weights and hyperparameters are stored in /energy_gradient subfolder.
+- **NN-tod-8me/** This folder contains the trained NN weights and hyperparameters in the /energy_gradient/ subfolder.
 
-- **training_data** This the compressed training data, saved separatly in a maximum 10 MB file.
+- **training_data/** This folder contains the compressed training data, saved separatly in a maximum 10 MB file.
 
-- **tod-8me-1** This is the example calculation.
+- **tod-8me-1/** This folder contains the example calculation.
 
 - **tod-8me.init.tar.xz** This is the compressed initial conditions sampled by Wigner sampling at zero-point energy level.
 
@@ -45,7 +47,57 @@ Each folder contains (e.g., in TOD-8Me):
 
 # How to use this demo?
 ## Extracting trainding data and initial conditions
-[under constructinon]
+Download the repository
+
+    git clone https://github.com/lopez-lab/PyRAI2MD-Demos.git
+    
+Copy one of the model folder or go to that folder (e.g., TOD-8Me)
+
+    cd /[2+2]-photocycloaddition_toward_Cubane/TOD-8Me
+
+To extract the training data first combine the individule files then untar it
+
+    cd training_data
+    cat data9303-13.json.tar.xz.part** > data9303-13.json.tar.xz
+    tar -xvf data9303-13.json.tar.xz
+
+The training data are saved in a capatable dictionary that PyRAI2MD can directly read. It can be converted to a more human-readable TXT file by
+
+    python convert.py data9303-13.json
+
+To load the training data in Python
+
+    import json
+    with open('data9303-13.json','r') as indata
+         data = json.load(indata)
+         natom, nstate, xyzset, invrset, energyset, gradset, nacset, civecset, movecset = idata
+         
+    """
+    natom             Number of atoms.
+    
+    nstate            Number of state.
+    
+    xyzset            Nuclear coordinates in a N by natom by 4 list.\
+                      N is the number of data points. 4 is the dimension of XYZ format (e.g., [atom, X, Y, Z]).
+    
+    energyset         Electronic energy in a N by nstate list. 
+                      N is the number of data points.
+                      
+    gradset           Nuclear gradient coordinates in N by nstate by natom by 3 list.
+                      N is the number of data points. 3 is the dimension of the gradient (e.g., [X, Y, X]).
+    
+    nacset            Nonadiabatic coupling (numerator part) in N by nstate*(nstate-1)/2 by natom by 3 list.
+                      N is the number of data points. 3 is the dimension of the coupling (e.g., [X, Y, X]).
+                      Here it only stores the unique interstate coupling (i.e., upper triangle of the coupling matrix).
+                      Since the nonadibatic coupling was not used, they are all zero matrix.
+    
+    civecset          Addition list to store CI vector information, not used in this cases, thus are empty.
+    
+    movecset          Addition list to store MO vector information, not used in this cases, thus are empty.
+    """
+
+
+
 ## Getting familiar with the PyRAI2MD input file
 [under constructinon]
 ## Understanding the inverse distance file and permutation map
