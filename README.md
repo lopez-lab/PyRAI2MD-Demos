@@ -39,7 +39,7 @@ Each folder contains (e.g., in TOD-8Me):
 
 - **tod-8me.init.tar.xz** This is the compressed initial conditions sampled by Wigner sampling at zero-point energy level.
 
-- **allpath2** This file stores the permutation map used for training NN. Note each demo has a different permutation map.
+- **allpath2** This file stores the permutation map used for training NN. Note each demo has a different permutation map inside the subfolders.
 
 - **invd_index3.txt** This file stores the atom indices defining the inverse distance
 
