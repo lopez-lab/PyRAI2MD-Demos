@@ -7,7 +7,8 @@ def NoEnsemble(traj):
     ## This function does not adjust energy and velocity
     V        = traj['V']
     Ekin     = traj['Ekin']
-    Vs       = traj['Vs']   # here I borrow Vs as total energy
+    Vs = [-1,0,0,0,-1] # Ignore the first 4 element since NVE do not use them
+                       # Set the first element to -1 to reset the NoseHoover if necessary
 
     return V,Vs,Ekin
 
