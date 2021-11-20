@@ -267,6 +267,16 @@ class AIMD:
             else:
                 V,Vs,Ekin = NVE(self.traj)
 
+        ## NVE for excited-state without scaling, NoseHoover for ground-state after a certain amount of time
+        elif self.traj['thermo'] == 3:
+            if self.traj['state'] > 1:
+                self.traj['iter_x'] = self.traj['iter']
+            delay = self.traj['iter'] - self.traj['iter_x']
+            if   self.traj['state'] == 1 and delay >= self.traj['thermodelay']:
+                V,Vs,Ekin = NoseHoover(self.traj)
+            else:
+       	       	return 0
+
         self.traj['V'] = V
         self.traj['Vs'] = Vs
         self.traj['Ekin'] = Ekin
