@@ -1,0 +1,88 @@
+&CONTROL
+title 4fb-1
+ml_ncpu  1
+qc_ncpu  1
+gl_seed  1
+jobtype  md     [MD, Train, Prediction, Adaptive, Search]
+qm       nn           [Molcas,NN,KRR,GP]
+abinit   bagel
+mingradient 0.167
+maxgradient 0.167
+maxenergy   0.02
+minenergy   0.02
+maxnac      0.25
+minnac      0.25
+maxiter     200
+load 1
+transfer 0
+
+&MD
+scale 1
+reset 1
+resetstep 4000
+initcond 0
+nesmb 150
+method wigner
+format bagel
+temp 300
+step 8000000
+size 20
+ci 2
+root 2
+sfhp gsh
+gap 1
+substep 50
+deco 0.1
+adjust 1
+reflect 1
+maxh 100
+thermo 3
+silent  1
+verbose 1
+direct 1
+buffer 4000
+
+&NN
+modeldir    /scratch/lijingbai2009/NN-C6F4H2/NN-MD/production/4ns-s1-1.5x/NN-4fb
+train_data  /scratch/lijingbai2009/NN-C6F4H2/NN-MD/production/4ns-s1-1.5x/data4710-2.json
+silent      1
+ratio 0.9 0.1
+train_mode  training
+nn_eg_type  2
+nn_nac_type 0
+permute_map /scratch/lijingbai2009/NN-C6F4H2/NN-MD/grid-search/data/allpath
+
+&EG
+depth          5
+nn_size        500
+activ          leaky_softplus
+active_alpha   0.03
+loss_weights   40 1
+batch_size     64
+use_reg_activ  l2
+use_reg_weight l2
+reg_l1         1e-10
+reg_l2         1e-10
+val_split      0.1
+epo            1000
+epostep        10
+learning_rate_step   1e-3 1e-4 1e-5
+epoch_step_reduction 600 300 100
+
+&EG2
+depth          6
+nn_size        400
+activ          leaky_softplus
+active_alpha   0.03
+loss_weights   40 1
+batch_size     64
+use_reg_activ  l2
+use_reg_weight l2
+reg_l1         1e-10
+reg_l2         1e-10
+val_split      0.1
+epo            1000
+epostep        10
+learning_rate_step   1e-3 1e-4 1e-5
+epoch_step_reduction 600 300 100
+
