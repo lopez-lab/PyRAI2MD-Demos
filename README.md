@@ -1,7 +1,9 @@
 # Python Rapid Artificial Intelligence Ab Initio Molecular Dynamics Demo
 This is a demostration of running machine-learning nonadiabatic molecular dyanmics (ML-NAMD) simulation using PyRAI2MD.
-These ML-NAMD simulations were used to investigate the substituent effects on the [2+2]-photocycloaddition of [3]-ladderenes
-toward a class of energy-dense molecule, cubane.(ChemRxiv *preprint*, doi:10.33774/chemrxiv-2021-lxsjk).
+These ML-NAMD simulations were used to investigate:
+ - the substituent effects on the [2+2]-photocycloaddition of [3]-ladderenes
+toward a class of energy-dense molecule, cubane.(J. Am. Chem. Soc. DOI:10.1021/jacs.1c07725)
+ - the reactivities and regioselectivities of 4π-electrocyclization of flurobenzenes (ChemRixv preprint DOI will be availabel soon).
 ## Prerequisite
  - **Python >=3.7** PyRAI2MD is written and tested in Python 3.7.4. Older version of Python is not tested and might not be working properly.
  - **TensorFlow >=2.2** TensorFlow/Keras API is required to load the trained NN models and predict energy and force.
@@ -19,7 +21,7 @@ A demo version of PyRAI2MD for testing ML-NAMD simulation. This version was only
 The ML kernel of PyRAI2MD developed by Patrick Reiser and Pascal Friederich @KIT, Germany. This is an outdated version that was initially interfaced with this demo version of PyRAI2MD. The latest release is here (https://github.com/aimat-lab/NNsForMD).
 
 ## Trained NN models
-This demo has three trained NN models:
+The first demo for cubane study has three trained NN models:
 
 - **/Photocycloaddition_toward_Cubane/TOD-8Me** Octamethyl [3]-ladderene model.
 
@@ -27,9 +29,19 @@ This demo has three trained NN models:
 
 - **/Photocycloaddition_toward_Cubane/TOD-8pr** Octacyclopropyl [3]-ladderene model.
 
-- **json2txt.py** This is a script to conver the training data from JSON to human-readable TXT file. 
+The second demo for fluorobenzenes study has four trained NN models:
+- **/Photocyclization_of_fluorobenzenes/hexafluorobenzene** Hexafluorobenzene model.
 
-Each folder contains (e.g., in TOD-8Me):
+- **/Photocyclization_of_fluorobenzenes/pentafluorobenzene** Pentafluorobenzene model.
+
+- **/Photocyclization_of_fluorobenzenes/tetrafluorobenzene** 1,2,4,5-tetrafluorobenzene model.
+
+- **/Photocyclization_of_fluorobenzenes/trifluorobenzene** 1,2,4-trifluorobenzene model.
+
+In the demo folder you will find: 
+- **json2txt.py** a Python script that converts the training data from JSON to human-readable TXT file.
+
+The model folder contains (here we use TOD-8Me as an example):
 
 - **NN-tod-8me/energy_gradient/** This folder contains the NN hyperparameters, training logs and trained weights.
 
