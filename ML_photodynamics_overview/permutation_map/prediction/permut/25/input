@@ -1,0 +1,52 @@
+&CONTROL
+title    hfb
+ml_ncpu     4
+gl_seed  1234
+jobtype  prediction  [MD, Train, Prediction, Adaptive, Search]
+qm       nn     [Molcas,NN,KRR,GP]
+
+&NN
+train_data  /scratch/lijingbai2009/AccChemRes/hfb_permutation/data/data901-shuffled.json
+pred_data   /scratch/lijingbai2009/AccChemRes/hfb_permutation/data/dewar-25-200.json
+modeldir    /scratch/lijingbai2009/AccChemRes/hfb_permutation/models/permut/NN-hfb
+silent      0
+ratio 0.9 0.1
+train_mode  training
+nn_eg_type  2
+nn_nac_type 0
+permute_map /scratch/lijingbai2009/AccChemRes/hfb_permutation/data/allpath
+
+&EG
+depth          6
+nn_size        700
+activ          leaky_softplus
+active_alpha   0.03
+loss_weights   40 1
+batch_size     64
+use_reg_activ  l2
+use_reg_weight l2
+reg_l1         1e-10
+reg_l2         1e-10
+val_split      0.1
+epo            1000
+epostep        10
+learning_rate_step   1e-3 1e-4 1e-5
+epoch_step_reduction 600 300 100
+
+&EG2
+depth          5
+nn_size        800
+activ          leaky_softplus
+active_alpha   0.03
+loss_weights   40 1
+batch_size     64
+use_reg_activ  l2
+use_reg_weight l2
+reg_l1         1e-10
+reg_l2         1e-10
+val_split      0.1
+epo            1000
+epostep        10
+learning_rate_step   1e-3 1e-4 1e-5
+epoch_step_reduction 600 300 100
+

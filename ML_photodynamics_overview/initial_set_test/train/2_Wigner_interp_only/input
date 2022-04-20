@@ -1,0 +1,61 @@
+&CONTROL
+title    hfb
+ml_ncpu  4
+qc_ncpu  1
+gl_seed  1
+jobtype  train     [MD, Train, Prediction, Adaptive, Search]
+qm       nn           [Molcas,NN,KRR,GP]
+abinit   bagel
+mingradient 0.25
+maxgradient 0.25
+maxenergy   0.03
+minenergy   0.03
+maxnac      0.25
+minnac      0.25
+maxiter     200
+load 1
+transfer 0
+
+&NN
+train_data  /scratch/lijingbai2009/AccChemRes/training_curves/train/data/set-2-shuffled.json
+silent      1
+ratio 0.9 0.1
+train_mode  training
+nn_eg_type  2
+nn_nac_type 0
+permute_map /scratch/lijingbai2009/AccChemRes/training_curves/train/data/allpath
+
+&EG
+depth          6
+nn_size        700
+activ          leaky_softplus
+active_alpha   0.03
+loss_weights   40 1
+batch_size     64
+use_reg_activ  l2
+use_reg_weight l2
+reg_l1         1e-10
+reg_l2         1e-10
+val_split      0.1
+epo            1000
+epostep        10
+learning_rate_step   1e-3 1e-4 1e-5
+epoch_step_reduction 600 300 100
+
+&EG2
+depth          5
+nn_size        800
+activ          leaky_softplus
+active_alpha   0.03
+loss_weights   40 1
+batch_size     64
+use_reg_activ  l2
+use_reg_weight l2
+reg_l1         1e-10
+reg_l2         1e-10
+val_split      0.1
+epo            1000
+epostep        10
+learning_rate_step   1e-3 1e-4 1e-5
+epoch_step_reduction 600 300 100
+

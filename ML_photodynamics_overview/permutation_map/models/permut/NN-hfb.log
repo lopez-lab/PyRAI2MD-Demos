@@ -1,0 +1,147 @@
+Neural Networks Start:  2021-10-26 20:59:38
+
+
+  --------------------------------------------------------------
+                               *
+                              /+\
+                             /+++\
+                            /+++++\
+                           /PyRAIMD\
+                          /+++++++++\
+                         *===========*
+
+                          Python Rapid
+                     Artificial Intelligence
+                  Ab Initio Molecular Dynamics
+
+                      Developer @Jingbai Li
+                  Northeastern University, USA
+
+                          version:   0.9b
+
+
+  With contriutions from (in alphabetic order):
+    Andre Eberhard	       - Gaussian process regression
+    Jingbai Li/Daniel Susman   - Zhu-Nakamura surface hopping
+    Jingbai Li                 - Fewest switches surface hopping
+                                 Velocity Verlet
+                                 Interface to OpenMolcas/BAGEL
+                                 Adaptive sampling (with enforcement)
+                                 QC/ML non-adiabatic molecular dynamics
+    Patrick Reiser	       - Neural networks (pyNNsMD)
+
+  Special acknowledgement to:
+    Steven A. Lopez	       - Project directorship
+    Pascal Friederich          - ML directoriship
+
+
+
+
+  &control
+-------------------------------------------------------
+  Title:                      hfb       
+  NCPU for ML:                4         
+  NCPU for QC:                1         
+  Seed:                       1234      
+  Job: 	                      train     
+  QM:          	       	      nn        
+-------------------------------------------------------
+
+
+  &training data
+-------------------------------------------------------
+  1/dist     max/min:       0.85397067       0.17536652
+             avg/std:       0.39769138       0.17047578
+             mid/dev:       0.51466860       0.33930208
+
+  energy     max/min:    -825.45638975    -825.82379512
+             avg/std:    -825.61798259       0.07967401
+       	     mid/dev:    -825.64009244       0.18370269
+
+  gradient   max/min:       2.28507202      -2.34885674
+             avg/std:       0.00000000       0.03998397
+       	     mid/dev:      -0.03189236       2.31696438
+
+  nac        max/min:       0.00000000       0.00000000
+             avg/std:       0.00000000       0.00000000
+       	     mid/dev:       0.00000000       0.00000000
+
+
+  &post data
+-------------------------------------------------------
+  ml_seed:        1
+  ratio      train/validation/test:  0.90  0.10 -0.00
+  dist       train/validation/test:   810    90     1
+  energy     train/validation/test:   810    90     1
+  gradient   train/validation/test:   810    90     1
+  nac        train/validation/test:   810    90     1
+
+
+  &nn
+-------------------------------------------------------
+  Train data:                 /scratch/lijingbai2009/AccChemRes/hfb_permutation/data/data901-shuffled.json
+  Predition data:             None      
+  Train mode:                 training  
+  Silent mode:                0         
+  NN EG type:                 2         
+  NN NAC type:                0         
+  Shuffle data:               False     
+  EG unit:                    si        
+  NAC unit:                   au        
+  Data permutation            /scratch/lijingbai2009/AccChemRes/hfb_permutation/data/allpath
+-------------------------------------------------------
+
+  &hyperparameters            Energy+Gradient    Nonadiabatic couplings Energy+Gradient(2) Nonadiabatic couplings(2)
+-----------------------------------------------------------------------
+  InvD features:              0                    0                    0                    0                    
+  Angle features:             0                    0                    0                    0                   
+  Dihedral features:          0                    0                    0                    0                   
+  Activation:                 leaky_softplus       leaky_softplus       leaky_softplus       leaky_softplus      
+  Activation alpha:           0.03                 0.03                 0.03                 0.03                
+  Layers:      	              6                    4                    5                    4                   
+  Neurons/layer:              700                  100                  800                  100                 
+  Dropout:                    False                False                False                False               
+  Dropout ratio:              0.005                0.005                0.005                0.005               
+  Regularization activation:  l2                   None                 l2                   None                
+  Regularization weight:      l2                   None                 l2                   None                
+  Regularization bias:        None                 None                 None                 None                
+  L1:                         1e-10                1e-05                1e-10                1e-05               
+  L2:         	              1e-10                1e-05                1e-10                1e-05               
+  Phase-less loss:            N/A                  False                N/A                  False               
+  Initialize weight:          True                 True                 True                 True                
+  Validation disjoint:        True                 True                 True                 True                
+  Validation split:           0.1                  0.1                  0.1                  0.1                 
+  Epoch:                      1000                 2000                 1000                 2000                
+  Epoch_pre:                  N/A                  100                  N/A                  100                 
+  Epoch_min:                  1000                 1000                 1000                 1000                
+  Patience:                   300                  300                  300                  300                 
+  Max time:                   300                  300                  300                  300                 
+  Epoch step:                 10                   10                   10                   10                  
+  Batch:                      64                   64                   64                   64                  
+  Delta loss:                 1e-05                1e-05                1e-05                1e-05               
+  Shift_X:     	       	      False                False                False                False               
+  Scale_X:                    False                False                False                False               
+  Shift_Y:                    True                 True                 True                 True                
+  Scale_Y:                    True                 True                 True                 True                
+  Feature normalization:      1                    1                    1                    1                   
+-----------------------------------------------------------------------
+
+
+
+ *---------------------------------------------------*
+ |                                                   |
+ |                  Neural Networks                  |
+ |                                                   |
+ *---------------------------------------------------*
+
+
+  &nn fitting 
+
+  &nn validation mean absolute error
+-------------------------------------------------------
+      energy       gradient       nac(interstate)
+        eV           eV/A         eV/A
+    0.02859825   0.31457145   0.00000000
+    0.02842279   0.47599358   0.00000000
+
+Neural Networks End:  2021-10-26 21:32:14 Total:     0 days     0 hours    32 minutes    38 seconds
